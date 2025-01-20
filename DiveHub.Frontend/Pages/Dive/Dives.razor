@@ -1,0 +1,76 @@
+﻿@page "/DIVES"
+@using DiveHub.ClientApi.Api
+@using DiveHub.ClientApi.Client
+@using DiveHub.ClientApi.Model
+<MudPaper Elevation="4" Class="pa-4">
+    <MudText Typo="Typo.h6">Dive List</MudText>
+    
+    <MudTable Items="@dives" Dense="true" Bordered="true" Striped="true">
+        <HeaderContent>
+            <MudTh>Name</MudTh>
+            <MudTh>Date</MudTh>
+            <MudTh>Description</MudTh>
+            <MudTh>Actions</MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel="Id">@context.diveId</MudTd>
+            <MudTd DataLabel="Name">@context.diveName</MudTd>
+            <MudTd DataLabel="Date">@context.diveDate</MudTd>
+            <MudTd DataLabel="Description">@context.description</MudTd>
+            <MudTd>
+                <MudButton Variant="Variant.Outlined" Color="Color.Primary" OnClick="() => EditDive(context.diveId)">Edit</MudButton>
+                <MudButton Variant="Variant.Outlined" Color="Color.Error" OnClick="() => DeleteDive(context.diveId)">Delete</MudButton>
+            </MudTd>
+        </RowTemplate>
+        @* <NoItemsContent> *@
+        @*     <MudText Typo="Typo.body1">No dives available.</MudText> *@
+        @* </NoItemsContent> *@
+    </MudTable>
+</MudPaper>
+
+@code {
+    [Inject] IDiveApiAsync diveApiAsync { get; set; } 
+
+    
+    private List<DiveDto> dives = [];
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            var t = diveApiAsync.ApiDiveGetAsync();
+            // dives = await diveApiAsync.ApiDiveGetAsync();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Failed to fetch dives: {ex.Message}");
+        }
+    }
+
+    private void EditDive(int diveId)
+    {
+        Console.WriteLine($"Edit Dive {diveId}"); // Replace with navigation to an edit page or modal
+    }
+
+    private async Task DeleteDive(int diveId)
+    {
+        // var confirmed = await MudDialog.ShowMessageBox(
+        //     "Confirm Delete",
+        //     "Are you sure you want to delete this dive?",
+        //     "Yes",
+        //     "No");
+        //
+        // if (confirmed)
+        // {
+        //     try
+        //     {
+        //         await ApiClient.DeleteDiveAsync(diveId);
+        //         dives = (await ApiClient.GetDivesAsync()).ToList(); // Refresh the list
+        //     }
+        //     catch (Exception ex)
+        //     {
+        //         Console.WriteLine($"Failed to delete dive: {ex.Message}");
+        //     }
+        // }
+    }
+}

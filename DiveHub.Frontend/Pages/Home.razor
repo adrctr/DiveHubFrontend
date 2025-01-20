@@ -1,0 +1,15 @@
+﻿@page "/"
+@inject NavigationManager Navigation
+
+<MudLayout>
+    <MudContainer MaxWidth="MaxWidth.Large" Style="text-align: center; padding-top: 2em;">
+        <MudPaper Elevation="3" Style="background-image: url('/ressources/Images/Home.jpg'); background-size: cover; height: 500px; display: flex; justify-content: center; align-items: center; color: white;">
+            <MudText Typo="Typo.h3" Style="font-weight: bold; text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);">
+                Bienvenue dans votre gestionnaire de plongées sous-marines
+            </MudText>
+        </MudPaper>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large" OnClick="@(() => Navigation.NavigateTo("/dives"))" Style="margin-top: 2em;">
+            Commencer
+        </MudButton>
+    </MudContainer>
+</MudLayout>
