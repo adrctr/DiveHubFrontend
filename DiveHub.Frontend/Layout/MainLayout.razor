@@ -1,6 +1,6 @@
 ﻿@inherits LayoutComponentBase
 @* Required *@
-<MudThemeProvider />
+<MudThemeProvider @bind-IsDarkMode="@_isDarkMode" Theme="_theme"/>
 <MudPopoverProvider />
 
 @* Needed for dialogs *@
@@ -11,7 +11,8 @@
 <MudLayout>
     <MudAppBar>
         <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
-        My Application
+        Gestionnaire de plongées
+        <MudSwitch @bind-Value="_isDarkMode" Color="Color.Primary" Class="ma-4 object-left" T="bool" Label="Light/Dark Mode"/>
     </MudAppBar>
     <MudDrawer @bind-Open="@_drawerOpen">
         <NavMenu/>
@@ -24,7 +25,8 @@
 </MudLayout>
 @code {
     bool _drawerOpen = true;
-
+    private MudTheme _theme = new();
+    private bool _isDarkMode = true;
     void DrawerToggle()
     {
         _drawerOpen = !_drawerOpen;

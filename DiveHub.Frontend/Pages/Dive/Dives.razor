@@ -1,8 +1,8 @@
-﻿@page "/DIVES"
+﻿@page "/dives"
 @using DiveHub.ClientApi.Api
 @using DiveHub.ClientApi.Client
 @using DiveHub.ClientApi.Model
-<MudPaper Elevation="4" Class="pa-4">
+<MudPaper Elevation="4" Class="pa-4 ma-6">
     <MudText Typo="Typo.h6">Dive List</MudText>
     
     <MudTable Items="@dives" Dense="true" Bordered="true" Striped="true">
@@ -38,8 +38,7 @@
     {
         try
         {
-            var t = diveApiAsync.ApiDiveGetAsync();
-            // dives = await diveApiAsync.ApiDiveGetAsync();
+            dives = await diveApiAsync.ApiDiveAllGetAsync();
         }
         catch (Exception ex)
         {

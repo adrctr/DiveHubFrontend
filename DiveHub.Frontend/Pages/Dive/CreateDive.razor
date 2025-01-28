@@ -3,16 +3,16 @@
 @inject ISnackbar Snackbar
 @using DiveHub.ClientApi.Model
 
-<MudPaper Elevation="4" Class="pa-4">
-    <MudText Typo="Typo.h6">Create a New Dive</MudText>
+<MudPaper Elevation="4" Class="pa-4 m-6">
+    <MudText Typo="Typo.h6">Créer une nouvelle plongée</MudText>
 
     <MudForm @ref="form" Model="diveDto">
-        <MudTextField @bind-Value="diveDto.diveName" Label="Dive Name" Required="true" />
-        <MudDatePicker @bind-Date="diveDateTemp" Label="Dive Date" Required="true" />
-        <MudTextField @bind-Value="diveDto.description" Label="Description" />
+        <MudTextField Value="diveDto.diveName" Label="Dive Name" Required="true" />
+        <MudDatePicker Date="@diveDto.diveDate" Label="Dive Date" Required="true" />
+        <MudTextField Value="diveDto.description" Label="Description" />
 
-        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@OnAddDive" >
-            Submit
+        <MudButton Class="ma-2" Variant="Variant.Filled" Color="Color.Primary" OnClick="@OnAddDive" >
+            Enregistrer
         </MudButton>
     </MudForm>
 </MudPaper>
@@ -26,13 +26,6 @@
     private MudForm? form;
     private bool isValid;
     
-    // Temporary nullable DateTime for binding
-    private DateTime? diveDateTemp
-    {
-        get => diveDto.diveDate; // Convert DiveDate to DateTime?
-        set => diveDto.diveDate = value ?? DateTime.Today; // Ensure DiveDate remains non-nullable
-    }
-
     private async Task OnAddDive()
     {
         await form!.Validate();
@@ -48,5 +41,10 @@
         {
             Snackbar.Add($"Failed to create dive: {ex.Message}", Severity.Error);
         }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        diveDto.diveDate = DateTime.Today;
     }
 }

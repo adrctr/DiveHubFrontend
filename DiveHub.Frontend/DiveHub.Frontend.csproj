@@ -5,21 +5,22 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <RootNamespace>DiveHub.Frontend</RootNamespace>
+        <EnableScopeCss>true</EnableScopeCss>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="9.0.0-rc.2.24474.3"/>
         <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="9.0.0-rc.2.24474.3" PrivateAssets="all"/>
-        <PackageReference Include="MudBlazor" Version="8.0.0" />
+        <PackageReference Include="MudBlazor" Version="8.0.0"/>
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Components\" />
-      <Folder Include="wwwroot\ressources\images\" />
+        <Folder Include="Components\"/>
+        <Folder Include="wwwroot\ressources\images\"/>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\DiveHub.ClientApi\DiveHub.ClientApi.csproj" />
+        <ProjectReference Include="..\DiveHub.ClientApi\DiveHub.ClientApi.csproj"/>
     </ItemGroup>
 
 </Project>
