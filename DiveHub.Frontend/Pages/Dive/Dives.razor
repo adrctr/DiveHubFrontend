@@ -17,10 +17,12 @@
                     <CellTemplate>
                         <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Outlined.Edit"
                                        OnClick="@context.Actions.StartEditingItemAsync"/>
+                        <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Outlined.Delete"
+                                       OnClick="@(() => DeleteDive(@context.Item))"/>
                     </CellTemplate>
                 </TemplateColumn>
-            </Columns>
-        </MudDataGrid>
+        </Columns>
+                </MudDataGrid>
 </MudStack>
 <MudSnackbarProvider/>
 
@@ -52,7 +54,7 @@
     }
 
 
-    private async Task DeleteDive(int diveId)
+    private async Task DeleteDive(DiveDetailDto diveTodelete)
     {
         var confirmed = await DialogService.ShowMessageBox(
             "Confirm Delete",
@@ -64,7 +66,7 @@
         {
             try
             {
-                await diveApiAsync.ApiDiveIdDeleteAsync(diveId);
+                await diveApiAsync.ApiDiveIdDeleteAsync(diveTodelete.diveId);
                 dives = (await diveApiAsync.ApiDiveAllGetAsync()).ToList(); // Refresh the list
                 Snackbar.Add("Dive deleted successfully!", Severity.Success);
             }
