@@ -8,7 +8,7 @@
     <MudPaper Elevation="4" Class="d-flex pa-4 ma-4">
         <MudText Typo="Typo.h6">Dive List</MudText>
     </MudPaper>
-        <MudDataGrid T="DiveDetailDto" Items="@dives" EditMode="DataGridEditMode.Form" Dense="true" Bordered="true">
+        <MudDataGrid T="DiveDetailDto" Items="@dives" ReadOnly="false" EditMode="DataGridEditMode.Form"  Dense="true" Bordered="true">
             <Columns>
                 <PropertyColumn Property="x => x.diveName" Title="Dive Name"/>
                 <PropertyColumn Property="x => x.diveDate" Title="Dive Date"/>
@@ -42,18 +42,13 @@
             Console.WriteLine($"Failed to fetch dives: {ex.Message}");
         }
     }
-
-    private void EditDive(int diveId)
+    
+  /*  private void StartEditingItem(DiveDetailDto diveDetailEdit)
     {
-        Console.WriteLine($"Edit Dive {diveId}"); // Replace with navigation to an edit page or modal
-    }
-
-    void StartedEditingItem(DiveDto item)
-    {
-        // _events.Insert(0, $"Event = StartedEditingItem, Data = {System.Text.Json.JsonSerializer.Serialize(item)}");
-    }
-
-
+        Snackbar.Add("test edit event", Severity.Success);
+        Console.WriteLine($"Edit Dive {diveDetailEdit}"); // Replace with navigation to an edit page or modal
+    }*/
+    
     private async Task DeleteDive(DiveDetailDto diveTodelete)
     {
         var confirmed = await DialogService.ShowMessageBox(
