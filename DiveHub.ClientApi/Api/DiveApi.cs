@@ -31,8 +31,8 @@ namespace DiveHub.ClientApi.Api
         /// </summary>
         /// <exception cref="DiveHub.ClientApi.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <returns>List&lt;DiveDetailDto&gt;</returns>
-        List<DiveDetailDto> ApiDiveAllGet(int operationIndex = 0);
+        /// <returns>List&lt;DiveDto&gt;</returns>
+        List<DiveDto> ApiDiveAllGet(int operationIndex = 0);
 
         /// <summary>
         /// 
@@ -42,8 +42,8 @@ namespace DiveHub.ClientApi.Api
         /// </remarks>
         /// <exception cref="DiveHub.ClientApi.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <returns>ApiResponse of List&lt;DiveDetailDto&gt;</returns>
-        ApiResponse<List<DiveDetailDto>> ApiDiveAllGetWithHttpInfo(int operationIndex = 0);
+        /// <returns>ApiResponse of List&lt;DiveDto&gt;</returns>
+        ApiResponse<List<DiveDto>> ApiDiveAllGetWithHttpInfo(int operationIndex = 0);
         /// <summary>
         /// 
         /// </summary>
@@ -130,8 +130,8 @@ namespace DiveHub.ClientApi.Api
         /// <exception cref="DiveHub.ClientApi.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="diveDto"></param>
         /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <returns></returns>
-        void ApiDivePut(DiveDto diveDto, int operationIndex = 0);
+        /// <returns>DiveDto</returns>
+        DiveDto ApiDivePut(DiveDto diveDto, int operationIndex = 0);
 
         /// <summary>
         /// 
@@ -142,8 +142,8 @@ namespace DiveHub.ClientApi.Api
         /// <exception cref="DiveHub.ClientApi.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="diveDto"></param>
         /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> ApiDivePutWithHttpInfo(DiveDto diveDto, int operationIndex = 0);
+        /// <returns>ApiResponse of DiveDto</returns>
+        ApiResponse<DiveDto> ApiDivePutWithHttpInfo(DiveDto diveDto, int operationIndex = 0);
         /// <summary>
         /// 
         /// </summary>
@@ -184,8 +184,8 @@ namespace DiveHub.ClientApi.Api
         /// <exception cref="DiveHub.ClientApi.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of List&lt;DiveDetailDto&gt;</returns>
-        System.Threading.Tasks.Task<List<DiveDetailDto>> ApiDiveAllGetAsync(int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
+        /// <returns>Task of List&lt;DiveDto&gt;</returns>
+        System.Threading.Tasks.Task<List<DiveDto>> ApiDiveAllGetAsync(int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
 
         /// <summary>
         /// 
@@ -196,8 +196,8 @@ namespace DiveHub.ClientApi.Api
         /// <exception cref="DiveHub.ClientApi.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse (List&lt;DiveDetailDto&gt;)</returns>
-        System.Threading.Tasks.Task<ApiResponse<List<DiveDetailDto>>> ApiDiveAllGetWithHttpInfoAsync(int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
+        /// <returns>Task of ApiResponse (List&lt;DiveDto&gt;)</returns>
+        System.Threading.Tasks.Task<ApiResponse<List<DiveDto>>> ApiDiveAllGetWithHttpInfoAsync(int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
         /// <summary>
         /// 
         /// </summary>
@@ -308,8 +308,8 @@ namespace DiveHub.ClientApi.Api
         /// <param name="diveDto"></param>
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task ApiDivePutAsync(DiveDto diveDto, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
+        /// <returns>Task of DiveDto</returns>
+        System.Threading.Tasks.Task<DiveDto> ApiDivePutAsync(DiveDto diveDto, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
 
         /// <summary>
         /// 
@@ -321,8 +321,8 @@ namespace DiveHub.ClientApi.Api
         /// <param name="diveDto"></param>
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> ApiDivePutWithHttpInfoAsync(DiveDto diveDto, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
+        /// <returns>Task of ApiResponse (DiveDto)</returns>
+        System.Threading.Tasks.Task<ApiResponse<DiveDto>> ApiDivePutWithHttpInfoAsync(DiveDto diveDto, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
         /// <summary>
         /// 
         /// </summary>
@@ -475,10 +475,10 @@ namespace DiveHub.ClientApi.Api
         /// </summary>
         /// <exception cref="DiveHub.ClientApi.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <returns>List&lt;DiveDetailDto&gt;</returns>
-        public List<DiveDetailDto> ApiDiveAllGet(int operationIndex = 0)
+        /// <returns>List&lt;DiveDto&gt;</returns>
+        public List<DiveDto> ApiDiveAllGet(int operationIndex = 0)
         {
-            DiveHub.ClientApi.Client.ApiResponse<List<DiveDetailDto>> localVarResponse = ApiDiveAllGetWithHttpInfo();
+            DiveHub.ClientApi.Client.ApiResponse<List<DiveDto>> localVarResponse = ApiDiveAllGetWithHttpInfo();
             return localVarResponse.Data;
         }
 
@@ -487,8 +487,8 @@ namespace DiveHub.ClientApi.Api
         /// </summary>
         /// <exception cref="DiveHub.ClientApi.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <returns>ApiResponse of List&lt;DiveDetailDto&gt;</returns>
-        public DiveHub.ClientApi.Client.ApiResponse<List<DiveDetailDto>> ApiDiveAllGetWithHttpInfo(int operationIndex = 0)
+        /// <returns>ApiResponse of List&lt;DiveDto&gt;</returns>
+        public DiveHub.ClientApi.Client.ApiResponse<List<DiveDto>> ApiDiveAllGetWithHttpInfo(int operationIndex = 0)
         {
             DiveHub.ClientApi.Client.RequestOptions localVarRequestOptions = new DiveHub.ClientApi.Client.RequestOptions();
 
@@ -521,7 +521,7 @@ namespace DiveHub.ClientApi.Api
 
 
             // make the HTTP request
-            var localVarResponse = this.Client.Get<List<DiveDetailDto>>("/api/Dive/All", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Get<List<DiveDto>>("/api/Dive/All", localVarRequestOptions, this.Configuration);
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("ApiDiveAllGet", localVarResponse);
@@ -540,10 +540,10 @@ namespace DiveHub.ClientApi.Api
         /// <exception cref="DiveHub.ClientApi.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of List&lt;DiveDetailDto&gt;</returns>
-        public async System.Threading.Tasks.Task<List<DiveDetailDto>> ApiDiveAllGetAsync(int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+        /// <returns>Task of List&lt;DiveDto&gt;</returns>
+        public async System.Threading.Tasks.Task<List<DiveDto>> ApiDiveAllGetAsync(int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
         {
-            DiveHub.ClientApi.Client.ApiResponse<List<DiveDetailDto>> localVarResponse = await ApiDiveAllGetWithHttpInfoAsync(operationIndex, cancellationToken).ConfigureAwait(false);
+            DiveHub.ClientApi.Client.ApiResponse<List<DiveDto>> localVarResponse = await ApiDiveAllGetWithHttpInfoAsync(operationIndex, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -553,8 +553,8 @@ namespace DiveHub.ClientApi.Api
         /// <exception cref="DiveHub.ClientApi.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse (List&lt;DiveDetailDto&gt;)</returns>
-        public async System.Threading.Tasks.Task<DiveHub.ClientApi.Client.ApiResponse<List<DiveDetailDto>>> ApiDiveAllGetWithHttpInfoAsync(int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+        /// <returns>Task of ApiResponse (List&lt;DiveDto&gt;)</returns>
+        public async System.Threading.Tasks.Task<DiveHub.ClientApi.Client.ApiResponse<List<DiveDto>>> ApiDiveAllGetWithHttpInfoAsync(int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
         {
 
             DiveHub.ClientApi.Client.RequestOptions localVarRequestOptions = new DiveHub.ClientApi.Client.RequestOptions();
@@ -587,7 +587,7 @@ namespace DiveHub.ClientApi.Api
 
 
             // make the HTTP request
-            var localVarResponse = await this.AsynchronousClient.GetAsync<List<DiveDetailDto>>("/api/Dive/All", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.GetAsync<List<DiveDto>>("/api/Dive/All", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -1149,10 +1149,11 @@ namespace DiveHub.ClientApi.Api
         /// <exception cref="DiveHub.ClientApi.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="diveDto"></param>
         /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <returns></returns>
-        public void ApiDivePut(DiveDto diveDto, int operationIndex = 0)
+        /// <returns>DiveDto</returns>
+        public DiveDto ApiDivePut(DiveDto diveDto, int operationIndex = 0)
         {
-            ApiDivePutWithHttpInfo(diveDto);
+            DiveHub.ClientApi.Client.ApiResponse<DiveDto> localVarResponse = ApiDivePutWithHttpInfo(diveDto);
+            return localVarResponse.Data;
         }
 
         /// <summary>
@@ -1161,8 +1162,8 @@ namespace DiveHub.ClientApi.Api
         /// <exception cref="DiveHub.ClientApi.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="diveDto"></param>
         /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public DiveHub.ClientApi.Client.ApiResponse<Object> ApiDivePutWithHttpInfo(DiveDto diveDto, int operationIndex = 0)
+        /// <returns>ApiResponse of DiveDto</returns>
+        public DiveHub.ClientApi.Client.ApiResponse<DiveDto> ApiDivePutWithHttpInfo(DiveDto diveDto, int operationIndex = 0)
         {
             // verify the required parameter 'diveDto' is set
             if (diveDto == null)
@@ -1180,6 +1181,9 @@ namespace DiveHub.ClientApi.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "text/plain",
+                "application/json",
+                "text/json"
             };
 
             var localVarContentType = DiveHub.ClientApi.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -1202,7 +1206,7 @@ namespace DiveHub.ClientApi.Api
 
 
             // make the HTTP request
-            var localVarResponse = this.Client.Put<Object>("/api/Dive", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Put<DiveDto>("/api/Dive", localVarRequestOptions, this.Configuration);
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("ApiDivePut", localVarResponse);
@@ -1222,10 +1226,11 @@ namespace DiveHub.ClientApi.Api
         /// <param name="diveDto"></param>
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task ApiDivePutAsync(DiveDto diveDto, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+        /// <returns>Task of DiveDto</returns>
+        public async System.Threading.Tasks.Task<DiveDto> ApiDivePutAsync(DiveDto diveDto, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
         {
-            await ApiDivePutWithHttpInfoAsync(diveDto, operationIndex, cancellationToken).ConfigureAwait(false);
+            DiveHub.ClientApi.Client.ApiResponse<DiveDto> localVarResponse = await ApiDivePutWithHttpInfoAsync(diveDto, operationIndex, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
@@ -1235,8 +1240,8 @@ namespace DiveHub.ClientApi.Api
         /// <param name="diveDto"></param>
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<DiveHub.ClientApi.Client.ApiResponse<Object>> ApiDivePutWithHttpInfoAsync(DiveDto diveDto, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+        /// <returns>Task of ApiResponse (DiveDto)</returns>
+        public async System.Threading.Tasks.Task<DiveHub.ClientApi.Client.ApiResponse<DiveDto>> ApiDivePutWithHttpInfoAsync(DiveDto diveDto, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
         {
             // verify the required parameter 'diveDto' is set
             if (diveDto == null)
@@ -1255,6 +1260,9 @@ namespace DiveHub.ClientApi.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "text/plain",
+                "application/json",
+                "text/json"
             };
 
             var localVarContentType = DiveHub.ClientApi.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -1276,7 +1284,7 @@ namespace DiveHub.ClientApi.Api
 
 
             // make the HTTP request
-            var localVarResponse = await this.AsynchronousClient.PutAsync<Object>("/api/Dive", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.PutAsync<DiveDto>("/api/Dive", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {

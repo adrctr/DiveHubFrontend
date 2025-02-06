@@ -3,41 +3,72 @@
 @inject ISnackbar Snackbar
 @using DiveHub.ClientApi.Model
 
+<MudText Typo="Typo.h6">Créer une nouvelle plongée</MudText>
 <MudPaper Elevation="4" Class="pa-4 ma-6">
-    <MudText Typo="Typo.h6">Créer une nouvelle plongée</MudText>
-
-    <MudForm @bind-IsValid="@IsValid" Spacing="3" @ref="form" Model="diveDto">
-        <MudTextField @bind-Value="@diveDto.diveName" Label="Dive Name" Required="true" RequiredError="Dive name is required!"/>
-        <MudDatePicker @bind-Date="@diveDto.diveDate" Label="Dive Date" Required="true" RequiredError="Dive date is required!"/>
-        <MudTextField @bind-Value="@diveDto.description" Lines="3" Label="Description" />
+    <MudForm @bind-IsValid="@IsValid" Spacing="3" @ref="form" Model="diveSaveDto">
+        <MudTextField @bind-Value="@diveSaveDto.diveName" Label="Dive Name" Required="true"
+                      RequiredError="Dive name is required!"/>
+        <MudDatePicker @bind-Date="@diveSaveDto.diveDate" Label="Dive Date" Required="true"
+                       RequiredError="Dive date is required!"/>
+        <MudTextField @bind-Value="@diveSaveDto.description" Lines="3" Label="Description"/>
     </MudForm>
-    <MudButton Class="ma-2" Disabled="@(!IsValid)" Variant="Variant.Filled" Color="Color.Primary" OnClick="@OnAddDive">
-        Enregistrer
-    </MudButton>
 </MudPaper>
 
-<MudSnackbarProvider />
+<MudText Typo="Typo.h6">Ajouter une photo à la plongée</MudText>
+
+<MudPaper Elevation="4" Class="pa-4 ma-6">
+    <MudForm @bind-IsValid="@IsValid" Spacing="3" @ref="form" Model="diveSavePhotoDto">
+        <MudTextField @bind-Value="@diveSavePhotoDto.diveId" Label="ID de la plongée" Required="true"/>
+
+        }
+        <MudFileUpload T="IBrowserFile" MaxFileSize="10485760" OnFilesChanged="@OnFileSelected" Accept="image/*">
+            <ActivatorContent>
+                <MudButton
+                    Variant="Variant.Filled"
+                    Color="Color.Primary"
+                    StartIcon="@Icons.Material.Filled.Image">
+                    Charger votre photo
+                </MudButton>
+            </ActivatorContent>
+        </MudFileUpload>
+
+        @if (!string.IsNullOrEmpty(photoPreviewUrl))
+        {
+            <MudImage Src="@photoPreviewUrl" Width="200" Height="200" Elevation="25" Class="rounded-lg ma-4"/>
+        }
+
+        @* <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="HandleUpload"> *@
+        @*     Télécharger la photo *@
+        @* </MudButton> *@
+    </MudForm>
+</MudPaper>
+
+<MudButton Class="mt-2" Disabled="@(!IsValid)" Variant="Variant.Filled" Color="Color.Primary" OnClick="@OnAddDive">
+    Enregistrer
+</MudButton>
+<MudSnackbarProvider/>
 
 @code {
-    [Inject] IDiveApiAsync diveApiAsync { get; set; } 
+    [Inject] IDiveApiAsync diveApiAsync { get; set; }
 
     bool IsValid;
-    private DiveSaveDto diveDto = new();
+    private DiveSaveDto diveSaveDto = new();
+    private DiveSavePhotoDto diveSavePhotoDto = new();
+    private IBrowserFile? SelectedFile;
+
+    private string? photoPreviewUrl;
+
     private MudForm? form;
-    private bool isValid;
-    
+
     private async Task OnAddDive()
     {
-        await form!.Validate();
-        //if (!isValid) return;
-
         try
         {
-            await diveApiAsync.ApiDivePostAsync(diveDto,1); // Remplacez avec l'ID utilisateur approprié
+            await diveApiAsync.ApiDivePostAsync(diveSaveDto, 1); // Remplacez avec l'ID utilisateur approprié
             Snackbar.Add("Dive created successfully!", Severity.Success);
-            diveDto = new DiveSaveDto()
+            diveSaveDto = new DiveSaveDto()
             {
-                diveDate =  DateTime.Today
+                diveDate = DateTime.Today
             }; // Reset form
         }
         catch (Exception ex)
@@ -46,8 +77,20 @@
         }
     }
 
-    protected override async Task OnInitializedAsync()
+    private async Task OnFileSelected(InputFileChangeEventArgs e)
     {
-        diveDto.diveDate = DateTime.Today;
+        SelectedFile = e.File;
+        if (SelectedFile != null)
+        {
+            var buffer = new byte[SelectedFile.Size];
+            await SelectedFile.OpenReadStream().ReadAsync(buffer);
+            photoPreviewUrl = $"data:image/png;base64,{Convert.ToBase64String(buffer)}";
+        }
     }
+
+    protected override void OnInitialized()
+    {
+        diveSaveDto.diveDate = DateTime.Today;
+    }
+
 }

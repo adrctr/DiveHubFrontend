@@ -1,36 +1,50 @@
 ﻿@page "/dives"
 @using DiveHub.ClientApi.Api
 @using DiveHub.ClientApi.Model
-
+@inject NavigationManager Navigation
 @inject ISnackbar Snackbar
 @inject IDialogService DialogService
 <MudStack>
     <MudPaper Elevation="4" Class="d-flex pa-4 ma-4">
         <MudText Typo="Typo.h6">Dive List</MudText>
     </MudPaper>
-        <MudDataGrid T="DiveDetailDto" Items="@dives" ReadOnly="false" EditMode="DataGridEditMode.Form"  Dense="true" Bordered="true">
-            <Columns>
-                <PropertyColumn Property="x => x.diveName" Title="Dive Name"/>
-                <PropertyColumn Property="x => x.diveDate" Title="Dive Date"/>
-                <PropertyColumn Property="x => x.description" Title="Description"/>
-                <TemplateColumn CellClass="d-flex justify-end">
-                    <CellTemplate>
-                        <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Outlined.Edit"
-                                       OnClick="@context.Actions.StartEditingItemAsync"/>
-                        <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Outlined.Delete"
-                                       OnClick="@(() => DeleteDive(@context.Item))"/>
-                    </CellTemplate>
-                </TemplateColumn>
+    <MudDataGrid T="DiveDto" Items="@dives"
+                 CommittedItemChanges="@EditADive"
+                 ReadOnly="false" EditMode="DataGridEditMode.Form" Dense="true" Bordered="true">
+        <Columns>
+            <PropertyColumn Property="x => x.diveName" Title="Dive Name"/>
+            <PropertyColumn Property="x => x.diveDate"
+                            Format="dd/MM/yyyy"
+                            Title="Dive Date">
+                <EditTemplate>
+                    <MudDatePicker @bind-Date="@context.Item.diveDate" Label="Dive Date" Required="true"
+                                   RequiredError="Dive date is required!"></MudDatePicker>
+                </EditTemplate>
+            </PropertyColumn>
+            <PropertyColumn Property="x => x.description" Title="Description"/>
+            <TemplateColumn CellClass="d-flex justify-end">
+                <CellTemplate>
+                    <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Outlined.Edit"
+                                   OnClick="@context.Actions.StartEditingItemAsync"/>
+                    <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Outlined.Delete"
+                                   OnClick="@(() => DeleteDive(@context.Item))"/>
+                </CellTemplate>
+            </TemplateColumn>
         </Columns>
-                </MudDataGrid>
+    </MudDataGrid>
 </MudStack>
+<MudButton Class="mt-2" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.AddCircle" Color="Color.Primary" OnClick="@(() => Navigate())">
+    Ajouter une nouvelle plongée
+</MudButton>
 <MudSnackbarProvider/>
 
 @code {
     [Inject] IDiveApiAsync diveApiAsync { get; set; }
 
-    private List<DiveDetailDto> dives = [];
-
+    private List<DiveDto> dives = []; 
+    
+    private void Navigate() { Navigation.NavigateTo("/dive/create"); }
+    
     protected override async Task OnInitializedAsync()
     {
         try
@@ -42,14 +56,22 @@
             Console.WriteLine($"Failed to fetch dives: {ex.Message}");
         }
     }
-    
-  /*  private void StartEditingItem(DiveDetailDto diveDetailEdit)
+
+    private async Task EditADive(DiveDto diveToEdit)
     {
-        Snackbar.Add("test edit event", Severity.Success);
-        Console.WriteLine($"Edit Dive {diveDetailEdit}"); // Replace with navigation to an edit page or modal
-    }*/
+        try
+        {
+            await diveApiAsync.ApiDivePutAsync(diveToEdit);
+            dives = (await diveApiAsync.ApiDiveAllGetAsync()).ToList(); // Refresh the list
+            Snackbar.Add("Dive edited successfully!", Severity.Success);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Failed to edit the dive: {ex.Message}");
+        }
+    }
     
-    private async Task DeleteDive(DiveDetailDto diveTodelete)
+    private async Task DeleteDive(DiveDto diveTodelete)
     {
         var confirmed = await DialogService.ShowMessageBox(
             "Confirm Delete",
@@ -71,5 +93,4 @@
             }
         }
     }
-
 }

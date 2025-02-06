@@ -34,15 +34,23 @@ namespace DiveHub.ClientApi.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="DiveSavePhotoDto" /> class.
         /// </summary>
+        /// <param name="diveId">diveId.</param>
         /// <param name="fileName">fileName.</param>
         /// <param name="url">url.</param>
         /// <param name="createdAt">createdAt.</param>
-        public DiveSavePhotoDto(string fileName = default(string), string url = default(string), DateTime? createdAt = default(DateTime?))
+        public DiveSavePhotoDto(int diveId = default(int), string fileName = default(string), string url = default(string), DateTime? createdAt = default(DateTime?))
         {
+            this.diveId = diveId;
             this.fileName = fileName;
             this.url = url;
             this.createdAt = createdAt;
         }
+
+        /// <summary>
+        /// Gets or Sets diveId
+        /// </summary>
+        [DataMember(Name = "diveId", EmitDefaultValue = false)]
+        public int diveId { get; set; }
 
         /// <summary>
         /// Gets or Sets fileName
@@ -70,6 +78,7 @@ namespace DiveHub.ClientApi.Model
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("class DiveSavePhotoDto {\n");
+            sb.Append("  diveId: ").Append(diveId).Append("\n");
             sb.Append("  fileName: ").Append(fileName).Append("\n");
             sb.Append("  url: ").Append(url).Append("\n");
             sb.Append("  createdAt: ").Append(createdAt).Append("\n");

@@ -38,7 +38,7 @@ namespace DiveHub.ClientApi.Model
         /// <param name="diveName">diveName.</param>
         /// <param name="diveDate">diveDate.</param>
         /// <param name="description">description.</param>
-        public DiveDto(int diveId = default(int), string diveName = default(string), DateTime diveDate = default(DateTime), string description = default(string))
+        public DiveDto(int diveId = default(int), string diveName = default(string), DateTime? diveDate = default(DateTime?), string description = default(string))
         {
             this.diveId = diveId;
             this.diveName = diveName;
@@ -61,8 +61,8 @@ namespace DiveHub.ClientApi.Model
         /// <summary>
         /// Gets or Sets diveDate
         /// </summary>
-        [DataMember(Name = "diveDate", EmitDefaultValue = false)]
-        public DateTime diveDate { get; set; }
+        [DataMember(Name = "diveDate", EmitDefaultValue = true)]
+        public DateTime? diveDate { get; set; }
 
         /// <summary>
         /// Gets or Sets description
