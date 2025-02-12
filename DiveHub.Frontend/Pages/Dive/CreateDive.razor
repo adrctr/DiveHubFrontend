@@ -16,58 +16,27 @@
 
 <MudText Typo="Typo.h6">Ajouter une photo à la plongée</MudText>
 
-<MudPaper Elevation="4" Class="pa-4 ma-6">
-    <MudForm @bind-IsValid="@IsValid" Spacing="3" @ref="form" Model="diveSavePhotoDto">
-        <MudTextField @bind-Value="@diveSavePhotoDto.diveId" Label="ID de la plongée" Required="true"/>
-        <MudFileUpload T="IBrowserFile" OnFilesChanged="@OnFileSelected" Accept="image/*">
-            <ActivatorContent>
-                <MudButton
-                    Variant="Variant.Filled"
-                    Color="Color.Primary"
-                    StartIcon="@Icons.Material.Filled.Image">
-                    Charger votre photo
-                </MudButton>
-            </ActivatorContent>
-        </MudFileUpload>
-
-        @if (!string.IsNullOrEmpty(photoPreviewUrl))
-        {
-            <MudImage Src="@photoPreviewUrl" Width="20" Height="20" Elevation="25" Class="rounded-lg ma-4"/>
-        }
-
-        @* <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="HandleUpload"> *@
-        @*     Télécharger la photo *@
-        @* </MudButton> *@
-    </MudForm>
-</MudPaper>
 
 <MudButton Class="mt-2" Disabled="@(!IsValid)" Variant="Variant.Filled" Color="Color.Primary" OnClick="@OnAddDive">
-    Enregistrer
+    Créer la plongée
 </MudButton>
 <MudSnackbarProvider/>
 
 @code {
     [Inject] IDiveApiAsync diveApiAsync { get; set; }
+    [Inject] NavigationManager Navigation { get; set; }
 
     bool IsValid;
     private DiveSaveDto diveSaveDto = new();
-    private DiveSavePhotoDto diveSavePhotoDto = new();
-    private IBrowserFile? SelectedFile;
-
-    private string? photoPreviewUrl;
-
     private MudForm? form;
 
     private async Task OnAddDive()
     {
         try
         {
-            await diveApiAsync.ApiDivePostAsync(diveSaveDto, 1); // Remplacez avec l'ID utilisateur approprié
+            DiveDto diveCreated = await diveApiAsync.ApiDivePostAsync(diveSaveDto, 1); // Remplacez avec l'ID utilisateur approprié
             Snackbar.Add("Dive created successfully!", Severity.Success);
-            diveSaveDto = new DiveSaveDto()
-            {
-                diveDate = DateTime.Today
-            }; // Reset form
+            Navigation.NavigateTo($"/dive/{diveCreated.diveId}/photos");
         }
         catch (Exception ex)
         {
@@ -75,23 +44,8 @@
         }
     }
 
-    private async Task OnFileSelected(InputFileChangeEventArgs e)
-    {
-        SelectedFile = e.File;
-        if (SelectedFile != null)
-        {
-            // Define the maximum file size allowed (2 GB)
-            long maxFileSize = 10L * 1024L * 1024L;
-            // Accept a file up to the specified size
-            var buffer = new byte[SelectedFile.Size];
-            await SelectedFile.OpenReadStream(maxAllowedSize: maxFileSize).ReadAsync(buffer);
-            photoPreviewUrl = $"data:image/png;base64,{Convert.ToBase64String(buffer)}";
-        }
-    }
-
     protected override void OnInitialized()
     {
         diveSaveDto.diveDate = DateTime.Today;
     }
-
 }

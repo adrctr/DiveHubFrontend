@@ -1,0 +1,94 @@
+@page "/dive/{diveId:int}/photos"
+@using DiveHub.ClientApi.Api
+@inject ISnackbar Snackbar
+@using DiveHub.ClientApi.Model
+
+
+@code {
+    [Parameter] public int DiveId { get; set; }
+    private IList<IBrowserFile> files = new List<IBrowserFile>();
+
+    protected override void OnInitialized()
+    {
+        Console.WriteLine(DiveId);
+    }
+    
+    // {
+    // private async Task OnFileUpload(InputFileChangeEventArgs e)
+    //     files = e.GetMultipleFiles(10); // Limite de 10 fichiers
+    // }
+    //
+    // private async Task UploadPhotos()
+    // {
+    //     var content = new MultipartFormDataContent();
+    //     foreach (var file in files)
+    //     {
+    //         var stream = file.OpenReadStream(5000000); // 5MB max
+    //         content.Add(new StreamContent(stream), "files", file.Name);
+    //     }
+    //
+    //     var response = await Http.PostAsync($"/api/dives/{DiveId}/photos", content);
+    //     if (response.IsSuccessStatusCode)
+    //     {
+    //         Snackbar.Add("Photos téléchargées avec succès !", Severity.Success);
+    //     }
+    //     else
+    //     {
+    //         Snackbar.Add("Échec de l’envoi des photos.", Severity.Error);
+    //     }
+    // }
+}
+@DiveId
+<MudCard>
+    <MudCardContent>
+        <MudText Typo="Typo.h6">Ajoutez des photos</MudText>
+    </MudCardContent>
+</MudCard>@*
+<MudPaper Elevation="4" Class="pa-4 ma-6">
+    <MudForm @bind-IsValid="@IsValid" Spacing="3" @ref="form" Model="diveSavePhotoDto">
+        <MudTextField @bind-Value="@diveSavePhotoDto.diveId" Label="ID de la plongée" Required="true"/>
+        <MudFileUpload T="IBrowserFile" OnFilesChanged="@OnFileSelected" Accept="image/*">
+            <ActivatorContent>
+                <MudButton
+                    Variant="Variant.Filled"
+                    Color="Color.Primary"
+                    StartIcon="@Icons.Material.Filled.Image">
+                    Charger votre photo
+                </MudButton>
+            </ActivatorContent>
+        </MudFileUpload>
+
+        @if (!string.IsNullOrEmpty(photoPreviewUrl))
+        {
+            <MudImage Src="@photoPreviewUrl" Width="20" Height="20" Elevation="25" Class="rounded-lg ma-4"/>
+        }
+
+        $1$ <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="HandleUpload"> #1#
+        $1$     Télécharger la photo #1#
+        $1$ </MudButton> #1#
+    </MudForm>
+</MudPaper>
+
+@code{
+    private DiveSavePhotoDto diveSavePhotoDto = new();
+    private IBrowserFile? SelectedFile;
+
+    private string? photoPreviewUrl;
+    bool IsValid;
+
+    private MudForm? form;
+    private async Task OnFileSelected(InputFileChangeEventArgs e)
+    {
+        SelectedFile = e.File;
+        if (SelectedFile != null)
+        {
+            // Define the maximum file size allowed (2 GB)
+            long maxFileSize = 10L * 1024L * 1024L;
+            // Accept a file up to the specified size
+            var buffer = new byte[SelectedFile.Size];
+            await SelectedFile.OpenReadStream(maxAllowedSize: maxFileSize).ReadAsync(buffer);
+            photoPreviewUrl = $"data:image/png;base64,{Convert.ToBase64String(buffer)}";
+        }
+    } 
+
+}*@
