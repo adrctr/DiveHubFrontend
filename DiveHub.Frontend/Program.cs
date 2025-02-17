@@ -23,6 +23,8 @@ DiveHub.ClientApi.Client.Configuration apiClientBackendConfiguration = new()
 #region API CLIENT DI
 builder.Services.AddScoped<IDiveApiAsync, DiveApi>();
 builder.Services.AddScoped<IUserApiAsync, UserApi>();
+builder.Services.AddScoped<IDivePhotoApiAsync, DivePhotoApi>();
+
 #endregion
 
 builder.Services.AddMudServices();

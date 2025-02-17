@@ -26,28 +26,24 @@ using OpenAPIDateConverter = DiveHub.ClientApi.Client.OpenAPIDateConverter;
 namespace DiveHub.ClientApi.Model
 {
     /// <summary>
-    /// DiveDetailDto
+    /// DivePhotoSaveDto
     /// </summary>
-    [DataContract(Name = "DiveDetailDto")]
-    public partial class DiveDetailDto : IValidatableObject
+    [DataContract(Name = "DivePhotoSaveDto")]
+    public partial class DivePhotoSaveDto : IValidatableObject
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="DiveDetailDto" /> class.
+        /// Initializes a new instance of the <see cref="DivePhotoSaveDto" /> class.
         /// </summary>
         /// <param name="diveId">diveId.</param>
-        /// <param name="diveName">diveName.</param>
-        /// <param name="diveDate">diveDate.</param>
-        /// <param name="description">description.</param>
-        /// <param name="divePoints">divePoints.</param>
-        /// <param name="divePhotos">divePhotos.</param>
-        public DiveDetailDto(int diveId = default(int), string diveName = default(string), DateTime? diveDate = default(DateTime?), string description = default(string), List<DivePointDto> divePoints = default(List<DivePointDto>), List<DivePhotoDto> divePhotos = default(List<DivePhotoDto>))
+        /// <param name="fileName">fileName.</param>
+        /// <param name="url">url.</param>
+        /// <param name="createdAt">createdAt.</param>
+        public DivePhotoSaveDto(int diveId = default(int), string fileName = default(string), string url = default(string), DateTime? createdAt = default(DateTime?))
         {
             this.diveId = diveId;
-            this.diveName = diveName;
-            this.diveDate = diveDate;
-            this.description = description;
-            this.divePoints = divePoints;
-            this.divePhotos = divePhotos;
+            this.fileName = fileName;
+            this.url = url;
+            this.createdAt = createdAt;
         }
 
         /// <summary>
@@ -57,34 +53,22 @@ namespace DiveHub.ClientApi.Model
         public int diveId { get; set; }
 
         /// <summary>
-        /// Gets or Sets diveName
+        /// Gets or Sets fileName
         /// </summary>
-        [DataMember(Name = "diveName", EmitDefaultValue = false)]
-        public string diveName { get; set; }
+        [DataMember(Name = "fileName", EmitDefaultValue = false)]
+        public string fileName { get; set; }
 
         /// <summary>
-        /// Gets or Sets diveDate
+        /// Gets or Sets url
         /// </summary>
-        [DataMember(Name = "diveDate", EmitDefaultValue = true)]
-        public DateTime? diveDate { get; set; }
+        [DataMember(Name = "url", EmitDefaultValue = false)]
+        public string url { get; set; }
 
         /// <summary>
-        /// Gets or Sets description
+        /// Gets or Sets createdAt
         /// </summary>
-        [DataMember(Name = "description", EmitDefaultValue = true)]
-        public string description { get; set; }
-
-        /// <summary>
-        /// Gets or Sets divePoints
-        /// </summary>
-        [DataMember(Name = "divePoints", EmitDefaultValue = false)]
-        public List<DivePointDto> divePoints { get; set; }
-
-        /// <summary>
-        /// Gets or Sets divePhotos
-        /// </summary>
-        [DataMember(Name = "divePhotos", EmitDefaultValue = false)]
-        public List<DivePhotoDto> divePhotos { get; set; }
+        [DataMember(Name = "createdAt", EmitDefaultValue = true)]
+        public DateTime? createdAt { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -93,13 +77,11 @@ namespace DiveHub.ClientApi.Model
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append("class DiveDetailDto {\n");
+            sb.Append("class DivePhotoSaveDto {\n");
             sb.Append("  diveId: ").Append(diveId).Append("\n");
-            sb.Append("  diveName: ").Append(diveName).Append("\n");
-            sb.Append("  diveDate: ").Append(diveDate).Append("\n");
-            sb.Append("  description: ").Append(description).Append("\n");
-            sb.Append("  divePoints: ").Append(divePoints).Append("\n");
-            sb.Append("  divePhotos: ").Append(divePhotos).Append("\n");
+            sb.Append("  fileName: ").Append(fileName).Append("\n");
+            sb.Append("  url: ").Append(url).Append("\n");
+            sb.Append("  createdAt: ").Append(createdAt).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }

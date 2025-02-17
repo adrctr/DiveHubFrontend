@@ -88,10 +88,11 @@ namespace DiveHub.ClientApi.Api
         /// 
         /// </summary>
         /// <exception cref="DiveHub.ClientApi.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="divePhotoDto"></param>
+        /// <param name="diveId"> (optional)</param>
+        /// <param name="files"> (optional)</param>
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns></returns>
-        void ApiDivePhotoPost(DivePhotoDto divePhotoDto, int operationIndex = 0);
+        void ApiDivePhotoPost(int? diveId = default(int?), List<System.IO.Stream>? files = default(List<System.IO.Stream>?), int operationIndex = 0);
 
         /// <summary>
         /// 
@@ -100,10 +101,11 @@ namespace DiveHub.ClientApi.Api
         /// 
         /// </remarks>
         /// <exception cref="DiveHub.ClientApi.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="divePhotoDto"></param>
+        /// <param name="diveId"> (optional)</param>
+        /// <param name="files"> (optional)</param>
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> ApiDivePhotoPostWithHttpInfo(DivePhotoDto divePhotoDto, int operationIndex = 0);
+        ApiResponse<Object> ApiDivePhotoPostWithHttpInfo(int? diveId = default(int?), List<System.IO.Stream>? files = default(List<System.IO.Stream>?), int operationIndex = 0);
         /// <summary>
         /// 
         /// </summary>
@@ -213,11 +215,12 @@ namespace DiveHub.ClientApi.Api
         /// 
         /// </remarks>
         /// <exception cref="DiveHub.ClientApi.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="divePhotoDto"></param>
+        /// <param name="diveId"> (optional)</param>
+        /// <param name="files"> (optional)</param>
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task ApiDivePhotoPostAsync(DivePhotoDto divePhotoDto, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
+        System.Threading.Tasks.Task ApiDivePhotoPostAsync(int? diveId = default(int?), List<System.IO.Stream>? files = default(List<System.IO.Stream>?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
 
         /// <summary>
         /// 
@@ -226,11 +229,12 @@ namespace DiveHub.ClientApi.Api
         /// 
         /// </remarks>
         /// <exception cref="DiveHub.ClientApi.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="divePhotoDto"></param>
+        /// <param name="diveId"> (optional)</param>
+        /// <param name="files"> (optional)</param>
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> ApiDivePhotoPostWithHttpInfoAsync(DivePhotoDto divePhotoDto, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<Object>> ApiDivePhotoPostWithHttpInfoAsync(int? diveId = default(int?), List<System.IO.Stream>? files = default(List<System.IO.Stream>?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
         /// <summary>
         /// 
         /// </summary>
@@ -761,35 +765,29 @@ namespace DiveHub.ClientApi.Api
         ///  
         /// </summary>
         /// <exception cref="DiveHub.ClientApi.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="divePhotoDto"></param>
+        /// <param name="diveId"> (optional)</param>
+        /// <param name="files"> (optional)</param>
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns></returns>
-        public void ApiDivePhotoPost(DivePhotoDto divePhotoDto, int operationIndex = 0)
+        public void ApiDivePhotoPost(int? diveId = default(int?), List<System.IO.Stream>? files = default(List<System.IO.Stream>?), int operationIndex = 0)
         {
-            ApiDivePhotoPostWithHttpInfo(divePhotoDto);
+            ApiDivePhotoPostWithHttpInfo(diveId, files);
         }
 
         /// <summary>
         ///  
         /// </summary>
         /// <exception cref="DiveHub.ClientApi.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="divePhotoDto"></param>
+        /// <param name="diveId"> (optional)</param>
+        /// <param name="files"> (optional)</param>
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of Object(void)</returns>
-        public DiveHub.ClientApi.Client.ApiResponse<Object> ApiDivePhotoPostWithHttpInfo(DivePhotoDto divePhotoDto, int operationIndex = 0)
+        public DiveHub.ClientApi.Client.ApiResponse<Object> ApiDivePhotoPostWithHttpInfo(int? diveId = default(int?), List<System.IO.Stream>? files = default(List<System.IO.Stream>?), int operationIndex = 0)
         {
-            // verify the required parameter 'divePhotoDto' is set
-            if (divePhotoDto == null)
-            {
-                throw new DiveHub.ClientApi.Client.ApiException(400, "Missing required parameter 'divePhotoDto' when calling DivePhotoApi->ApiDivePhotoPost");
-            }
-
             DiveHub.ClientApi.Client.RequestOptions localVarRequestOptions = new DiveHub.ClientApi.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
-                "application/json",
-                "text/json",
-                "application/*+json"
+                "application/x-www-form-urlencoded"
             };
 
             // to determine the Accept header
@@ -809,7 +807,17 @@ namespace DiveHub.ClientApi.Api
                 localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
             }
 
-            localVarRequestOptions.Data = divePhotoDto;
+            if (diveId != null)
+            {
+                localVarRequestOptions.FormParameters.Add("diveId", DiveHub.ClientApi.Client.ClientUtils.ParameterToString(diveId)); // form parameter
+            }
+            if (files != null)
+            {
+                foreach (var file in files)
+                {
+                    localVarRequestOptions.FileParameters.Add("files", file);
+                }
+            }
 
             localVarRequestOptions.Operation = "DivePhotoApi.ApiDivePhotoPost";
             localVarRequestOptions.OperationIndex = operationIndex;
@@ -833,38 +841,32 @@ namespace DiveHub.ClientApi.Api
         ///  
         /// </summary>
         /// <exception cref="DiveHub.ClientApi.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="divePhotoDto"></param>
+        /// <param name="diveId"> (optional)</param>
+        /// <param name="files"> (optional)</param>
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task ApiDivePhotoPostAsync(DivePhotoDto divePhotoDto, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task ApiDivePhotoPostAsync(int? diveId = default(int?), List<System.IO.Stream>? files = default(List<System.IO.Stream>?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
         {
-            await ApiDivePhotoPostWithHttpInfoAsync(divePhotoDto, operationIndex, cancellationToken).ConfigureAwait(false);
+            await ApiDivePhotoPostWithHttpInfoAsync(diveId, files, operationIndex, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         ///  
         /// </summary>
         /// <exception cref="DiveHub.ClientApi.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="divePhotoDto"></param>
+        /// <param name="diveId"> (optional)</param>
+        /// <param name="files"> (optional)</param>
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<DiveHub.ClientApi.Client.ApiResponse<Object>> ApiDivePhotoPostWithHttpInfoAsync(DivePhotoDto divePhotoDto, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<DiveHub.ClientApi.Client.ApiResponse<Object>> ApiDivePhotoPostWithHttpInfoAsync(int? diveId = default(int?), List<System.IO.Stream>? files = default(List<System.IO.Stream>?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
         {
-            // verify the required parameter 'divePhotoDto' is set
-            if (divePhotoDto == null)
-            {
-                throw new DiveHub.ClientApi.Client.ApiException(400, "Missing required parameter 'divePhotoDto' when calling DivePhotoApi->ApiDivePhotoPost");
-            }
-
 
             DiveHub.ClientApi.Client.RequestOptions localVarRequestOptions = new DiveHub.ClientApi.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
-                "application/json", 
-                "text/json", 
-                "application/*+json"
+                "application/x-www-form-urlencoded"
             };
 
             // to determine the Accept header
@@ -883,7 +885,17 @@ namespace DiveHub.ClientApi.Api
                 localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
             }
 
-            localVarRequestOptions.Data = divePhotoDto;
+            if (diveId != null)
+            {
+                localVarRequestOptions.FormParameters.Add("diveId", DiveHub.ClientApi.Client.ClientUtils.ParameterToString(diveId)); // form parameter
+            }
+            if (files != null)
+            {
+                foreach (var file in files)
+                {
+                    localVarRequestOptions.FileParameters.Add("files", file);
+                }
+            }
 
             localVarRequestOptions.Operation = "DivePhotoApi.ApiDivePhotoPost";
             localVarRequestOptions.OperationIndex = operationIndex;

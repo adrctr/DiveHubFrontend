@@ -39,7 +39,7 @@ namespace DiveHub.ClientApi.Model
         /// <param name="description">description.</param>
         /// <param name="points">points.</param>
         /// <param name="photos">photos.</param>
-        public DiveSaveDto(string diveName = default(string), DateTime? diveDate = default(DateTime?), string description = default(string), List<DiveSavePointDto> points = default(List<DiveSavePointDto>), List<DiveSavePhotoDto> photos = default(List<DiveSavePhotoDto>))
+        public DiveSaveDto(string diveName = default(string), DateTime? diveDate = default(DateTime?), string description = default(string), List<DiveSavePointDto> points = default(List<DiveSavePointDto>), List<DivePhotoSaveDto> photos = default(List<DivePhotoSaveDto>))
         {
             this.diveName = diveName;
             this.diveDate = diveDate;
@@ -76,7 +76,7 @@ namespace DiveHub.ClientApi.Model
         /// Gets or Sets photos
         /// </summary>
         [DataMember(Name = "photos", EmitDefaultValue = false)]
-        public List<DiveSavePhotoDto> photos { get; set; }
+        public List<DivePhotoSaveDto> photos { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
