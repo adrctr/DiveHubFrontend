@@ -1,14 +1,15 @@
 @page "/dive/{diveId:int}/photos"
 @using System.Net.Http.Headers
 @using DiveHub.ClientApi.Api
-@using Microsoft.AspNetCore.Http
 @inject ISnackbar Snackbar
 
-  <PageTitle>Upload Files</PageTitle>
 
-<h1>Upload Files!</h1>
+<PageTitle>Upload Files</PageTitle>
 
-<InputFile OnChange="@OnInputFileChange" multiple />
+
+
+
+
 
 @* @if (fileNames.Count > 0) 
 {
@@ -27,38 +28,43 @@
     </ul>
 }
 *@
+<MudFileUpload T="IReadOnlyList<IBrowserFile>" FilesChanged="UploadFiles">
+    <ActivatorContent>
+        <MudButton Variant="Variant.Filled"
+                   Color="Color.Primary"
+                   StartIcon="@Icons.Material.Filled.CloudUpload">
+            Multiple Files
+        </MudButton>
+    </ActivatorContent>
+</MudFileUpload>
+
 @code {
     private int maxAllowedFiles = int.MaxValue;
     private long maxFileSize = long.MaxValue;
     private List<string> fileNames = new();
-    
+
     [Inject] private HttpClient Http { get; set; } = default!;
-    
+
     [Parameter] public int DiveId { get; set; }
 
-    private async Task OnInputFileChange(InputFileChangeEventArgs e)
+    private async Task UploadFiles(IReadOnlyList<IBrowserFile> files)
     {
         using var content = new MultipartFormDataContent();
-        
         content.Add(new StringContent(DiveId.ToString()), "DiveId");
 
-        foreach (var file in e.GetMultipleFiles(maxAllowedFiles))
+        foreach (var file in files)
         {
-            var fileContent = new StreamContent(file.OpenReadStream(maxFileSize));
+            var stream = file.OpenReadStream(maxFileSize);
+            var fileContent = new StreamContent(stream);
             fileContent.Headers.ContentType = new MediaTypeHeaderValue(file.ContentType);
 
             fileNames.Add(file.Name);
 
-            content.Add(
-                content: fileContent,
-                name: "\"files\"",
-                fileName: file.Name);
+            content.Add(fileContent, "files", file.Name);
         }
 
         var response = await Http.PostAsync("http://localhost:5109/api/DivePhoto", content);
-
     }
-
     // private string? GetStoredFileName(string fileName)
     // {
     //     var uploadResult = uploadResults.SingleOrDefault(f => f.FileName == fileName);
